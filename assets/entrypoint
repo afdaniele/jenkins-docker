@@ -27,5 +27,5 @@ else
     exit
   fi
   sudo usermod -a -G ${DOCKER_GROUP} `whoami`
-  sudo -Eu jenkins /sbin/tini -- /usr/local/bin/jenkins.sh
+  sudo -Eu jenkins env "PATH=$PATH" /sbin/tini -- /usr/local/bin/jenkins.sh
 fi
