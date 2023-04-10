@@ -19,7 +19,7 @@ DOCKER_GID=$(stat -c '%g' ${DOCKER_SOCKET})
 if [ $(getent group ${DOCKER_GROUP}) ]; then
   echo "Group '${DOCKER_GROUP}' found. No need to create it."
   # run jenkins
-  /sbin/tini -- /usr/local/bin/jenkins.sh
+  /usr/bin/tini -- /usr/local/bin/jenkins.sh
 else
   # try to create a new group with GID=DOCKER_GID
   sudo groupadd --system --gid ${DOCKER_GID} ${DOCKER_GROUP}
@@ -27,5 +27,5 @@ else
     exit
   fi
   sudo usermod -a -G ${DOCKER_GROUP} `whoami`
-  sudo -Eu jenkins /sbin/tini -- /usr/local/bin/jenkins.sh
+  sudo -Eu jenkins /usr/bin/tini -- /usr/local/bin/jenkins.sh
 fi
