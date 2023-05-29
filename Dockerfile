@@ -5,7 +5,11 @@ FROM jenkins/jenkins:${JENKINS_VERSION}
 # define arguments
 ARG DOCKER_DOWNLOAD_URL="https://download.docker.com/linux/static/stable"
 ARG DOCKER_ARCH="x86_64"
-ARG DOCKER_VERSION="18.06.0-ce"
+ARG DOCKER_VERSION="20.10.21"
+
+ARG DOCKER_BUILDKIT_DOWNLOAD_URL="https://github.com/docker/buildx/releases/download"
+ARG DOCKER_BUILDKIT_ARCH="amd64"
+ARG DOCKER_BUILDKIT_VERSION="v0.10.5"
 
 USER root
 
@@ -31,6 +35,17 @@ RUN cd /tmp \
   && rm -rf \
     docker \
     docker-bin.tgz
+
+# install docker buildkit
+RUN cd /tmp \
+  # make directories
+  && mkdir -p /usr/lib/docker/cli-plugins \
+  # download binaries
+  && wget \
+    "${DOCKER_BUILDKIT_DOWNLOAD_URL}/${DOCKER_BUILDKIT_VERSION}/buildx-${DOCKER_BUILDKIT_VERSION}.linux-${DOCKER_BUILDKIT_ARCH}" \
+    -O /usr/lib/docker/cli-plugins/docker-buildx \
+    # make it executable
+    && chmod +x /usr/lib/docker/cli-plugins/docker-buildx
 
 # install libraries
 RUN apt update \
