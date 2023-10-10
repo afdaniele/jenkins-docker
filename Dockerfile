@@ -55,7 +55,7 @@ RUN apt update \
   && rm -rf /var/lib/apt/lists/*
 
 # install cpk and rretry
-RUN pip3 install -U cpk>=0.4.3 run-and-retry
+RUN pip3 install --break-system-packages -U "cpk>=0.4.3" "run-and-retry"
 
 # give the jenkins user the power to create groups
 RUN echo 'jenkins ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers.d/jenkins_no_password

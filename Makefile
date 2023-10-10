@@ -1,4 +1,4 @@
-JENKINS_VERSION=2.399
+JENKINS_VERSION=2.426
 
 build:
 	docker build --build-arg JENKINS_VERSION=${JENKINS_VERSION} -t afdaniele/jenkins:${JENKINS_VERSION} -t afdaniele/jenkins:latest ./
